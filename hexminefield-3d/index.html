@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HexMinefield 3D – Spherical Minesweeper Game</title>
+  <meta name="description" content="Play Minesweeper on a fully rotatable 3D sphere. Take on Classic and No Flag modes, daily quests, four difficulties, and cosmetic themes.">
+  <link rel="canonical" href="https://tuyaupipe.github.io/hexminefield-3d/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HexMinefield 3D – Spherical Minesweeper Game">
+  <meta property="og:description" content="Rediscover Minesweeper on a board you can turn.">
+  <meta property="og:url" content="https://tuyaupipe.github.io/hexminefield-3d/">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "HexMinefield 3D",
+    "description": "A spherical 3D Minesweeper puzzle with Classic and No Flag modes, daily quests, four difficulties, and cosmetic themes.",
+    "url": "https://tuyaupipe.github.io/hexminefield-3d/",
+    "sameAs": "https://play.google.com/store/apps/details?id=net.pipestudio.hexminefield3d",
+    "gamePlatform": "Android",
+    "genre": ["Puzzle", "Logic"],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Pipe Studio",
+      "url": "https://tuyaupipe.github.io/"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      --page: #f5f7fb;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #5d6677;
+      --line: #dbe1ea;
+      --accent: #265ee8;
+      --accent-dark: #1744b8;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--page); color: var(--text); }
+    a { color: var(--accent); }
+    .wrap { width: min(1040px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 22px 0; }
+    nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { color: var(--text); font-weight: 750; text-decoration: none; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .hero { padding: 72px 0 64px; }
+    .hero-card {
+      overflow: hidden;
+      position: relative;
+      padding: clamp(34px, 7vw, 72px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: 0 24px 60px #10234a14;
+    }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      right: -115px;
+      top: -120px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 34% 32%, #8fd7ff 0 5%, transparent 6%),
+        radial-gradient(circle at 62% 42%, #f4c84a 0 7%, transparent 8%),
+        radial-gradient(circle at 48% 68%, #4b78f4 0 8%, transparent 9%),
+        linear-gradient(145deg, #2148ad, #142858);
+      opacity: .95;
+    }
+    .hero-copy { position: relative; z-index: 1; max-width: 680px; }
+    .eyebrow { margin: 0 0 12px; color: var(--accent); font-weight: 750; letter-spacing: .04em; text-transform: uppercase; font-size: .84rem; }
+    h1, h2, h3 { line-height: 1.18; }
+    h1 { margin: 0; font-size: clamp(2.6rem, 8vw, 5.2rem); letter-spacing: -.045em; }
+    .lead { max-width: 660px; margin: 22px 0 0; color: var(--muted); font-size: clamp(1.1rem, 2.6vw, 1.35rem); }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .button { display: inline-block; padding: 12px 18px; border-radius: 10px; font-weight: 750; text-decoration: none; }
+    .button-primary { background: var(--accent); color: #fff; }
+    .button-primary:hover { background: var(--accent-dark); }
+    .button-secondary { border: 1px solid var(--line); color: var(--text); background: var(--surface); }
+    .availability { margin: 16px 0 0; color: var(--muted); font-size: .92rem; }
+    section { padding: 26px 0 54px; }
+    h2 { margin: 0 0 14px; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -.025em; }
+    .section-intro { max-width: 700px; margin: 0 0 24px; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature { padding: 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+    .feature h3 { margin: 0 0 8px; }
+    .feature p { margin: 0; color: var(--muted); }
+    .how-to { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+    .steps { margin: 0; padding-left: 1.25rem; }
+    .steps li { margin-bottom: 12px; }
+    .cta { padding: 32px; border-radius: 18px; background: #142858; color: #fff; }
+    .cta h2 { margin-bottom: 10px; }
+    .cta p { color: #dce6ff; }
+    .cta .button-secondary { color: #fff; border-color: #ffffff55; background: transparent; }
+    footer { margin-top: 34px; padding: 30px 0 44px; border-top: 1px solid var(--line); color: var(--muted); }
+    footer p { margin: 8px 0; }
+    footer a { margin-right: 14px; }
+    @media (prefers-color-scheme: dark) {
+      :root { --page: #0b1020; --surface: #121a2c; --text: #eef3ff; --muted: #aeb8cc; --line: #2b3750; --accent: #7da2ff; --accent-dark: #5e88ef; }
+      .hero-card { box-shadow: none; }
+    }
+    @media (max-width: 760px) {
+      .hero { padding-top: 36px; }
+      .hero-card::after { width: 190px; height: 190px; right: -80px; top: -90px; opacity: .55; }
+      .grid, .how-to { grid-template-columns: 1fr; }
+      nav { align-items: flex-start; }
+      .nav-links { justify-content: flex-end; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav aria-label="Main navigation">
+      <a class="brand" href="/">Pipe Studio</a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="/hexminefield-3d/support/">Support</a>
+        <a href="/hexminefield-3d/privacy-policy/">Privacy</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero wrap">
+      <div class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow">A spherical Minesweeper puzzle</p>
+          <h1>HexMinefield 3D</h1>
+          <p class="lead">Rediscover Minesweeper on a board you can turn. Read the clues, avoid the mines, and clear a fully rotatable sphere made of connected hexagonal and pentagonal cells.</p>
+          <div class="actions">
+            <a class="button button-primary" href="https://play.google.com/store/apps/details?id=net.pipestudio.hexminefield3d">Get it on Google Play</a>
+            <a class="button button-secondary" href="#how-to-play">How to play</a>
+          </div>
+          <p class="availability">Available for Android. Free download with optional ads and an in-app purchase.</p>
+        </div>
+      </div>
+    </div>
+
+    <section id="features" class="wrap">
+      <h2>Familiar logic, a new perspective</h2>
+      <p class="section-intro">The classic deduction puzzle now has no corners to hide behind.</p>
+      <div class="grid">
+        <article class="feature">
+          <h3>Turn the sphere</h3>
+          <p>Drag to inspect every side of a seamless 3D minefield.</p>
+        </article>
+        <article class="feature">
+          <h3>Choose your challenge</h3>
+          <p>Play Classic or No Flag mode from Easy through Extreme difficulty.</p>
+        </article>
+        <article class="feature">
+          <h3>Come back daily</h3>
+          <p>Complete Daily Quests, build a streak, and unlock cosmetic themes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="how-to-play" class="wrap how-to">
+      <div>
+        <h2>Clear the whole sphere</h2>
+        <p class="section-intro">Every number tells you how many mines touch that cell. Combine the clues until only the mines remain.</p>
+      </div>
+      <ol class="steps">
+        <li>Tap a cell to reveal it. Your first reveal and its neighbors are protected.</li>
+        <li>Hold to mark a suspected mine, or rotate the board to inspect another side.</li>
+        <li>Reveal every safe cell without touching a mine.</li>
+      </ol>
+    </section>
+
+    <section class="wrap">
+      <div class="cta">
+        <h2>Ready to sweep a sphere?</h2>
+        <p>Track records on your device, share results, and submit your best times to Google Play Games leaderboards.</p>
+        <div class="actions">
+          <a class="button button-primary" href="https://play.google.com/store/apps/details?id=net.pipestudio.hexminefield3d">Open in Google Play</a>
+          <a class="button button-secondary" href="/hexminefield-3d/support/">Get support</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <p>HexMinefield 3D is published by Pipe Studio.</p>
+    <p>
+      <a href="/">Developer home</a>
+      <a href="/hexminefield-3d/support/">Support</a>
+      <a href="/hexminefield-3d/privacy-policy/">Privacy Policy</a>
+      <a href="/hexminefield-3d/privacy-choices/">Privacy Choices</a>
+    </p>
+  </footer>
+</body>
+</html>
